@@ -1,0 +1,23 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x0810000f  j 0x0040003c          5    j       main
+0x00400004  0x00801021  addu $2,$4,$0         7    addu    $v0, $a0, $zero 
+0x00400008  0x04410001  bgez $2,0x00000001    8    bgez    $v0, return
+0x0040000c  0x00041022  sub $2,$0,$4          9    sub     $v0, $zero, $a0
+0x00400010  0x03e00008  jr $31                11   jr      $ra
+0x00400014  0x00854020  add $8,$4,$5          13   add     $t0, $a0, $a1        # (x + y)
+0x00400018  0x00852022  sub $4,$4,$5          14   sub     $a0, $a0, $a1        # x - y
+0x0040001c  0x23bdfffc  addi $29,$29,0xfffffff15   addi    $sp, $sp, -4				
+0x00400020  0xafbf0000  sw $31,0x00000000($29)16   sw      $ra, 0($sp)          # push($ra)
+0x00400024  0x0c100001  jal 0x00400004        17   jal     absoluto             # absoluto(x - y)
+0x00400028  0x01021020  add $2,$8,$2          18   add     $v0, $t0, $v0        # ((x + y)+ absoluto(x - y))
+0x0040002c  0x00021042  srl $2,$2,0x00000001  19   srl     $v0, $v0, 1          # ((x + y)+ absoluto(x - y))/2
+0x00400030  0x8fbf0000  lw $31,0x00000000($29)20   lw      $ra, 0($sp)          # pop($ra)
+0x00400034  0x23bd0004  addi $29,$29,0x000000021   addi    $sp, $sp, +4
+0x00400038  0x03e00008  jr $31                22   jr      $ra
+0x0040003c  0x3c011001  lui $1,0x00001001     24   lw      $a0, a
+0x00400040  0x8c240000  lw $4,0x00000000($1)       
+0x00400044  0x3c011001  lui $1,0x00001001     25   lw      $a1, b
+0x00400048  0x8c250004  lw $5,0x00000004($1)       
+0x0040004c  0x0c100005  jal 0x00400014        26   jal     max
+0x00400050  0x00022021  addu $4,$0,$2         27   move    $a0,$v0       

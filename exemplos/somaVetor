@@ -1,0 +1,30 @@
+.eqv  ULT_POSICAO_VET      9
+.data
+VET: .word  1, 2, 3, 4, 5, 6, 7, 8, 9, 10      
+       
+.text
+      la	$a0, VET	# Pega o endereço do primeiro byte de VET[0]
+      la   	$a1, VET 
+      li        $t0, ULT_POSICAO_VET
+      sll       $t0, $t0, 2	# $t0 = 9 * 4 (36 bytes)
+      add       $a1, $a1, $t0   # Pega o endereço do primeiro byte de VET[9]
+       
+ loop:       
+      slt       $t0, $a0, $a1   # Endereço contido em $a1 > end. em $a0? Feito.
+      beq       $t0, $zero, fim
+      jal	inverte	
+      addi 	$a0, $a0, 4     # Endereço do próximo elemento a partir do início de VET[0]
+      addi	$a1, $a1, -4    # Endereço do elemento anterior a partir do início de VET[9]
+      j		loop
+
+fim:    
+      li	$v0,10		# Termina o programa 
+      syscall
+      
+inverte:      						
+      lw   	$t0, 0($a0)  	# temp1 = VET[i]   
+      lw   	$t1, 0($a1)	# temp2 = VET[j]
+      sw   	$t0, 0($a1)     # VET[j] = temp1
+      sw   	$t1, 0($a0)     # VET[i] = temp2
+      jr   	$ra
+

@@ -1,0 +1,22 @@
+.eqv  SZ_VET      10	
+.data
+VET: .word  1, 5, 4, 1, 9, 10, 10, 10, 3, 7, 13     
+       
+.text
+      la	$a0, VET	
+      li 	$t1, 0
+       
+ loop:       
+      slti      $t0, $t1, SZ_VET   
+      beq       $t0, $zero, fim
+      lw        $s1, 0($a0)
+      add       $s0, $s0, $s1
+      addi 	$a0, $a0, 4
+      addi	$t1, $t1, 1     
+      j		loop
+fim:    
+      li	$v0,10		# Termina o programa 
+      syscall
+      
+
+

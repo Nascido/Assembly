@@ -1,0 +1,47 @@
+.data
+vetor: 		.word 0,0,0,0
+tamanho: 	.word 4
+msg_entrada: 	.asciiz "Entre com o número: "
+msg_saida: 	.asciiz "O maior é "
+
+.text
+la 		$s0,vetor 		# Carrega end. base de vetor
+li 		$s1,1 			# Contador
+lw 		$s2,tamanho 	 	# Tamanho de vetor
+
+# Lê eleementos do vetor
+
+leitura: 
+bgt 		$s1,$s2,iniciaProcura 	# Pseudo-intrução: Branch Greater Than (desvia se maior que)
+la		$a0, msg_entrada
+li		$v0, 4
+syscall					# Escreve mensagem na tela
+li		$v0, 5			#
+syscall					# Lê em $v0 o valor digitado pelo usuário
+sw 		$v0,0($s0)
+addi 		$s1,$s1,1		# Incremeneta contador
+addi 		$s0,$s0,4		# End. próximo eleemento do vetor
+j 		leitura
+
+iniciaProcura:
+la 		$s0,vetor 		# Carrega end. base de vetor
+lw 		$s3, 0($s0) 		# $s3 guarda o máximo (inicialmente o 1o elementodo vetor)
+li 		$t1,2 			# Contador
+procuraMax:
+bgt 		$t1,$s2,escreveMax
+addi 		$s0,$s0,4
+lw 		$v0,0($s0)
+bge 		$s3, $v0, mantem	# Pseudo-intrução: Branch Greater or Equal Than (desvia se maior o igual a)
+move 		$s3, $v0
+mantem:
+addi 		$t1,$t1,1 
+j 		procuraMax
+escreveMax:
+la		$a0, msg_saida
+li		$v0, 4
+syscall	
+move 		$a0, $s3		# Escreve mensagem na tela
+li		$v0,1			# 
+syscall					# Imprime o resultado
+li		$v0,10			# 
+syscall					# Encerra o programa

@@ -1,0 +1,63 @@
+.macro done
+  li $v0,10
+  syscall
+.end_macro	
+
+.macro print_int (%x)
+  li $v0, 1
+  add $a0, $zero, %x
+  syscall
+.end_macro
+
+.macro print_str (%str)
+  .data
+  myLabel: .asciiz %str
+  .text
+  li $v0, 4
+  la $a0, myLabel
+  syscall
+.end_macro
+
+.macro read_int(%x)	
+  li $v0,5  # Para ler do teclado
+  syscall
+  move %x,$v0
+.end_macro
+
+.macro inc (%x)
+  addi %x, %x, 1
+.end_macro
+
+
+.text
+main:					# int main(){
+print_str ("Entre com um n?mero ") 	#   printf("Entre com um n?meroa");
+read_int($s0) 				#   scanf("%i", &N);
+move	$a0, $s0			# 
+jal	fibonacci    			#   int fib = fibonacci(N)
+move	$s1, $v0			#
+print_str("O termo e'  ") 		#   printf("O termo e' ");
+print_int ($s1)				#   printf("%d", fib)
+done					#   return 0;
+					# }
+					
+fibonacci:				# int fibonacci(int N){
+move	$t3, $a0
+li 	$v0, 0				#   int fib = 0;
+beq	$t3, 1, end_while		#   if (N = 1) return fib;
+li 	$v0, 1				#   fib = 1;
+beq	$t3, 2, end_while               #   if (N == 2 || N == 3) return fib;
+beq	$t3, 3, end_while
+li 	$t0, 1	                        #   t_ant_ant = 1;
+li	$t1, 1                          #   t_ant = 1;
+li 	$t2, 4				#   i = 4;
+while:		   			#   do{
+add     $v0, $t0, $t1			#     fib =  t_ant_ant +  t_ant; 
+move    $t0, $t1			#     t_ant_ant =  t_ant; 
+move	$t1, $v0			#     t_ant = fib; 
+inc($t2)				#     i++;
+ble	$t2, $t3, while			#   }hile(i <= N);
+end_while:				#   
+jr	$ra				#   return fib;
+					# }
+

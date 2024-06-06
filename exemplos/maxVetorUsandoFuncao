@@ -1,0 +1,36 @@
+.eqv  SZ_VET      10	
+.data
+VET: .word  4, 5, 9, 18, 3, 33, 8, 7, 13, 1      
+       
+.text
+      la	$a0, VET	
+      li	$a1, SZ_VET
+      jal       maximoVet
+fim:    
+      li	$v0,10		# Termina o programa 
+      syscall
+ maximoVet:     
+      li 	$t1, 1        	# Contador
+      lw        $v0, 0($a0)     # maximo = vet[0]
+      move      $t2, $a0
+      
+ loop:       
+      slt       $t0, $t1, $a1       # Contador < SZ_VET?
+      beq       $t0, $zero, return # Não? Feito.
+      lw        $t3, 0($t2)
+      slt       $t0, $v0, $t3     # maximo < vet[i]?
+      beq       $t0, 1, muda      # Sim? Acerta máximo
+      j         nao_muda
+muda:
+      move      $v0, $t3           # maximo = vet[i]       
+nao_muda:
+      addi 	$t2, $t2, 4        # Pega o proximo elemento de vet
+      addi	$t1, $t1, 1        # Contador = Contador + 1 
+      j		loop
+return:
+      jr        $ra
+
+
+      
+
+

@@ -1,0 +1,9 @@
+# Coloca 1 em $v0 se n é par; 0 c.c.
+.data
+n:            .word     13
+.text 
+lw      $s0, n
+rem     $s1, $s0, 2   # temp = n % 2
+li      $s2, 1        
+sub     $v0, $s2, $s1 # saida = 1 - temp
+

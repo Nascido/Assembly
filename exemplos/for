@@ -1,0 +1,26 @@
+# for (i=0; i < y; i++) x = x*z;
+.data
+i:   	.word  0 
+y:  	.word  4 
+z:  	.word  2
+x:  	.word  2  
+             
+.text
+	la   $t0, i		# Carrega end. de i
+      	la   $t1, y     	# Carrega end. de y
+      	la   $t2, z     	# Carrega end. de z
+      	la   $t3, x	    	# Carrega end. de x
+      	add  $t5, $t3, $zero
+      	lw   $t0, 0($t0)        # Carrega valor de i
+      	lw   $t1, 0($t1)        # Carrega valor de y
+      	lw   $t2, 0($t2)        # Carrega valor de z
+      	lw   $t3, 0($t3)        # Carrega valor de x
+FOR:
+      	slt  $t4, $t0, $t1	# i < y?
+      	beq  $t4, $zero, FIM   	# Sim: vai p FIM
+      	mul  $t3, $t2, $t3	# x = x*z;
+      	addi $t0, $t0, 1 	# i++
+      	j    FOR        
+FIM: 
+      	sw  $t3, 0($t5)	    # Armazena o valor calculado na varivel x
+      

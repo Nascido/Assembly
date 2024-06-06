@@ -1,0 +1,18 @@
+.data
+VET: .word  1, 1, 1, 1, 1, 1, 1, 1, 1, 1      
+       
+.text
+la $s0, VET 	# Pega o endereço do primeiro byte de VET[0]
+li $s1, 10                   # limite = 10
+li $s2, 0                    # i = 0
+li $a0, 0                    # Acumulador = 0
+loop: 	
+sll $t1, $s2, 2              # $t1 = 4*i
+add $t1, $t1, $s0            # $t1 = endEreço(VET) + $t1			
+lw  $t0, 0($t1)              # $t0 = VET[i]
+add $a0, $a0, $t0            # AcumulaDor = Acumulador + $t0
+addi $s2, $s2, 1             # i++
+bne $s2, $s1, loop           # se i < limite vá para loop
+exit: 
+li $v0,10                    # Termina o programa 
+syscall

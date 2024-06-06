@@ -1,0 +1,12 @@
+.data
+A: .word 5
+B: .word 7
+C: .word 3
+X: .word 0
+.text 
+lw $t0, A
+lw $t1, B
+add $t0, $t0, $t1
+lw $t1, C
+add $t0, $t0, $t1
+sw $t0, X

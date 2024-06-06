@@ -1,0 +1,40 @@
+
+# Endereços IP são valores de 32 bits. Logo, total = 2^32 = 4 Giga
+# Em vez de usarmos números decimais com até com 9 algarismos, dividimos os
+# 4 bytes 932 bits) em 4 octetos. O primeiro octeto é o mais à esquerda
+# IPs vão de 0.0.0.0 a 255.255.255.255
+#
+# Classe A: intervalo do primeiro octeto vai de 1 a 127
+# O primeiro bit do primeiro octeto é sempre 0 (0b00000000 a 0b01111111)
+# Exemplo: 10.52.36.11
+#
+# Classe B: intervalo do primeiro octeto vai de 128 a 191.
+# Dois primeiros bits do primeiro octeto são sempre 10 (0b10000000 a 0b10111111)
+# Exemplo: 168.212.226.204
+# 
+# Classe C: intervalo do primeiro octeto vai de 192 a 223.
+# Três primeiros bits do primeiro octeto são sempre 110 (0b11000000 a 0b11011111)
+# Exemplo: 123.456.789.1
+# 
+
+
+      .data
+IP:   .word  0xCE2C26C0     # 0b11001110001011000010011011000000 ou 3459000000 
+            
+      .text
+      li   $s0, 3           # máscara = 0b111;
+      lw   $s0, IP      
+      srl  $s1, $s0, 29     # temp = ip >> 29;   
+      and  $s1, $s1, $s0    # resultado = temp & máscara
+CLASSE_A: 
+      li   $s2, 'A'         # classe = 'A';      
+      bgt  $s1, 3, CLASSE_B # if (resultado > 3) goto CLASSE_B;
+      j    FIM              # else goto FIM;
+CLASSE_B:  
+      li   $s2, 'B'         # classe = '5';      
+      bgt  $s1, 5, CLASSE_C # if (resultado > 5) goto CLASSE_C;
+      j    FIM              # else goto FIM;
+CLASSE_C:  
+      li   $s2, 'C'         # classe = '5';      
+FIM:
+      
