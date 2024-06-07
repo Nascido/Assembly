@@ -8,7 +8,10 @@ sleep 2
 
 pathAssembly=$(pwd)				# Caminho do Diretorio de Instalação
 
+echo "creating ~/bin directory ..."
 mkdir ~/bin					# Criando pasta bin para scripts
+echo ""
+
 cp $pathAssembly/.mars/mars.sh ~/bin/mars.sh	# Copiando Script para a pasta ~/bin
 chmod u+x ~/bin/mars.sh				# Habilitando modo executável
 
