@@ -19,29 +19,28 @@ echo "Para abrir o programa, execute no terminal: mars.sh"
 echo ""
 sleep 2
 
-not_answer=1
+not_answer=true
 
 while [$not_answer]
 do
-read -n1 -p "Deseja abrir o MARS agora? [ y , n ]" doit
-
-case $doit in
-  'y'|'Y') 
-    open_mars=1 
-    not_answer=0
-    ;;
-    
-  'n'|'N') 
-    open_mars=0 
-    not_answer=0
-    ;;
-    
-  *)
-    echo "y para SIM e n para NAO ..."
-    echo ""
-    ;;
-esac
-
+  read -n1 -p "Deseja abrir o MARS agora? [ y , n ]" doit
+  
+  case $doit in
+    'y'|'Y') 
+      open_mars=true 
+      not_answer=true
+      ;;
+      
+    'n'|'N') 
+      open_mars=false
+      not_answer=true
+      ;;
+      
+    *)
+      echo "y para SIM e n para NAO ..."
+      echo ""
+      ;;
+  esac
 done
 
 if [$open_mars]
