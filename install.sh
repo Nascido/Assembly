@@ -1,7 +1,7 @@
 #!/bin/bash
 echo ""
 echo "##############################################################################################"
-echo "Criando scrip de execução MARS"
+echo "Criando script de execução MARS"
 echo "##############################################################################################"
 echo ""
 sleep 2
@@ -16,12 +16,24 @@ cp $pathAssembly/.mars/mars.sh ~/bin/mars.sh	# Copiando Script para a pasta ~/bi
 chmod u+x ~/bin/mars.sh				# Habilitando modo executável
 
 echo "Para abrir o programa, execute no terminal: mars.sh"
-
+echo ""
 sleep 2
 
-echo "Abrindo Mars em 3s ..."
+not_answer=1
 
-sleep 3
+while [$not_answer]
+do
+read -n1 -p "Deseja abrir o MARS agora? [ y , n ]" doit
+case $doit in
+  y|Y) open_mars=1; not_answer=0
+  n|N) open_mars=0; not_answer=0
+  *)  echo "y para SIM e n para NAO ..."; echo ""
+done
 
-mars.sh
+if [$open_mars]
+then 
+  echo "Abrindo Mars em 3s ..."
+  sleep 3
 
+  mars.sh
+fi
