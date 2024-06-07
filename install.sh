@@ -24,10 +24,24 @@ not_answer=1
 while [$not_answer]
 do
 read -n1 -p "Deseja abrir o MARS agora? [ y , n ]" doit
+
 case $doit in
-  y|Y) open_mars=1; not_answer=0
-  n|N) open_mars=0; not_answer=0
-  *)  echo "y para SIM e n para NAO ..."; echo ""
+  'y'|'Y') 
+    open_mars=1 
+    not_answer=0
+    ;;
+    
+  'n'|'N') 
+    open_mars=0 
+    not_answer=0
+    ;;
+    
+  *)
+    echo "y para SIM e n para NAO ..."
+    echo ""
+    ;;
+esac
+
 done
 
 if [$open_mars]
