@@ -1,6 +1,6 @@
 .data
-	number1:	.word 5
-	number2:	.word 10
+	number1:	.word 34
+	number2:	.word 890
 
 .text
 	lw $t0, number1($zero)	# t0 --> number1
