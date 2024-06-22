@@ -4,8 +4,23 @@
 .text
 	
 	main:
-		addi $t0, $zero, 5
+		addi $t0, $zero, 20
 		addi $t1, $zero, 20
+		
+		beq  $t0, $t1, numbersEqual
+		bne  $t0, $t1, numbersNOTequal
+	
+	numbersEqual:
+		li $v0, 4
+		la $a0, message
+		syscall
+		
+		jal end
+		
+	numbersNOTequal:
+		li $v0, 4
+		la $a0, message2
+		syscall
 		
 		jal end
 	
