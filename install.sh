@@ -15,6 +15,8 @@ echo ""
 cp $pathAssembly/.mars/mars.sh ~/bin/mars.sh	# Copiando Script para a pasta ~/bin
 chmod u+x ~/bin/mars.sh				# Habilitando modo executável
 
+sudo ln -s $pathAssembly $HOME/Assembly
+
 echo "Para abrir o programa, execute no terminal: mars.sh"
 echo ""
 sleep 2
