@@ -1,6 +1,6 @@
 .data
 	array: .space 8
-	length: .word 8
+	length: .word 2
 .text
 .globl main
 
